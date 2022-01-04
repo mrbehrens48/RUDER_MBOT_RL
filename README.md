@@ -9,6 +9,7 @@ Included Files
 3) arduino microcontroller code (C++), run on an Arduino STEMtera
 4) modified libraby for stacking two Pololu motor controllers
 
+Authors: [Michael Behrens](https://www.linkedin.com/in/michael-behrens-phd/), [Warren Ruder](https://www.warrenruder.com/)
 
 ### Contact:
 
