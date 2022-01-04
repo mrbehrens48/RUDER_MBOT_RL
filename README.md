@@ -3,7 +3,7 @@
 
 Welcome to the official repository for _Smart Magnetic Microrobots Learn to Swim with Deep Reinforcement Learning._ This repository contains all the code used to implement a feedback control system for a helical agar magnetic microrobot and custom three-axis electromagnet.  The full paper can be found HERE. This code was developed in Windows 10 using Python VERSION Tensorflow VERISON. This code was developed on a Lambda Labs workstation with dual NVIDIA RTX1080 GPUs. 
 
-<img align="left" src="data/readme_images/Figure1.jpg" height=480px>
+<img align="left" src="data/readme/Figure 1.jpg" height=480px>
 
 Included Files:
 1) SAC for microrobot control (Python)
