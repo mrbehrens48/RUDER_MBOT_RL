@@ -8,3 +8,9 @@ Included Files
 2) microrobot environment (Python)
 3) arduino microcontroller code (C++), run on an Arduino STEMtera
 4) modified libraby for stacking two Pololu motor controllers
+
+
+### Contact:
+
+If you have any questions or find any bugs, please file a github issue or contact me:  
+Michael Behrens: mrb157[at]pitt[dot]edu
