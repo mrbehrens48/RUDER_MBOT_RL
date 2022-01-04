@@ -1,10 +1,10 @@
-# Soft Actor Critic for magnetic microrobot control
+# Soft Actor Critic for Magnetic Microrobot Control
 
 
 Welcome to the official repository for _Smart Magnetic Microrobots Learn to Swim with Deep Reinforcement Learning._ This repository contains all the code used to implement a feedback control system for a helical agar magnetic microrobot and custom three-axis electromagnet.  The full paper describing the implementation details can be found HERE. This code was developed in Windows 10 using Python VERSION Tensorflow VERISON. This code was developed on a Lambda Labs workstation with dual NVIDIA RTX1080 GPUs. This code is provided as is with the hope that it might be useful or illuminating, but without warranty or expectation of ongoing support.
 
 <img align="left" src="readme/Figure 1.jpg" height=480px>
-</n>
+
 
 Included Files:
 1) SAC for microrobot control (Python)
@@ -18,5 +18,5 @@ Authors: [Michael Behrens](https://www.linkedin.com/in/michael-behrens-phd/), [W
 
 ### Contact:
 
-If you have any questions or find any bugs, please file a github issue or contact me:  
+If you have any questions please contact me:  
 Michael Behrens: mrb157[at]pitt[dot]edu
