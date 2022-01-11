@@ -7,10 +7,10 @@ Welcome to the official repository for _Smart Magnetic Microrobots Learn to Swim
 
 
 Included Files:
-1) microrobot_sac_control.py (the main program file)
+1) microrobot_SAC_control.py (the main program file)
 2) microrobot_environment.py (interface between main program and hardware)
-3) arduino microcontroller code (C++), run on an Arduino STEMtera
-4) modified libraby for stacking two Pololu motor controllers
+3) Magneturret.ino (arduino C++ code, run on an Arduino STEMtera)
+4) Arduino Libraries for stacking two Pololu motor controller shields together.
 
 Resources: <b> [PDF]() | [Website](https://www.warrenruder.com/) </b>
 
