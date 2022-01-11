@@ -1,0 +1,5 @@
+Supplementary Movie S1: Training process time course. 
+This movie shows an accelerated time course of the HAMR’s movements during training. The agent starts out randomly exploring actions, 
+and as training progresses the HAMR begins to move continuously in a clockwise direction around the arena.
+Supplementary Movie S2: HAMR swimming around the track.
+This movie shows the swimming action of the HAMR in real time, for one complete trip around the circular track during evaluation of state-based policy No. 1.
