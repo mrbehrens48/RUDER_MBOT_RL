@@ -12,7 +12,7 @@ Included Files:
 3) Magneturret.ino (arduino C++ code, run on an Arduino STEMtera)
 4) Arduino Libraries for stacking two Pololu motor controller shields together.
 
-Resources: <b> [PDF]() | [Website](https://www.warrenruder.com/) </b>
+Resources: <b> [PDF]() 
 
 Authors: [Michael Behrens](https://www.linkedin.com/in/michael-behrens-phd/), [Warren Ruder](https://www.warrenruder.com/)
 
