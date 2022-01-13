@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Mar 26 14:13:27 2021
-
-@author: Windows
-"""
-
 import tensorflow as tf
 import threading
 import sys
@@ -14,7 +7,7 @@ from vimba import *
 import multiprocessing as mp
 import time
 import numpy as np
-import microrobot_environment as mbot
+import microrobot_environment_parallel_3x as mbot
 import os
 from tqdm import tqdm
 from tensorflow.keras import layers
@@ -25,77 +18,18 @@ from math import pi
 
 tf.keras.backend.set_floatx('float32') #set the default data type in the keras model to float32
 
-'''**********************************************setup parameters'''
-MODEL_NAME = 'microrobot june 30 run of may28'
-model_save_path = 'models'
-buffer_save_path = f'buffers/{MODEL_NAME}_buffers'
-buffer_load_path = f'buffers/microrobot june 7 convolutional_buffers'
-tensorboard_save_path = 'microrobot_tensorboard'
-log_save_path = f'logs/{MODEL_NAME}_logs'
+from myconfig import * #the myconfig file is essential for setting up experimental parameters, and should be updated each time the program is run. 
 
-load_pi_model_name = 'top_pi_model_microrobot may 28_978'
-load_q1_model_name = 'top_q1_model_microrobot may 28_978'
-load_q2_model_name = 'top_q2_model_microrobot may 28_978'
-
-SIMULATION = 0
-VERBOSE = 0
-CONVOLUTIONAL = 0 #do we want to run a convolutional neural net or a state neural net?
-NUM_ACTIONS = 4 #how many actions does our environment have
-PARAMETER_SEARCH = 0 #do we want to do a sweep of a hyperameter?
-UPDATE_ALPHA = 1 #do we want to update the temperature, or keep it fixed?
-CONTINUOUS_EVALUATION = 0 #used when testing a trained model for the effectiveness of the deterministic policy
-
-LOAD_PI = 1 #do we start with a pretrained-pi model or from scratch?
-LOAD_Q = 0 #do we start with a pretrained Q model or from scratch?
-LOAD_BUFFER = 0
-'''1 is standard here'''
-IMPLEMENT_POLICY_AFTER = 1 #how many frames to do at the beginning of training while randomly sampling actions, not getting from pi
-'''1000 is standard here'''
-UPDATE_AFTER = 1000 #how many frames to run at the beginning before we start doing updates (fill the buffer)
-
-'''use these if you don't want to use the neural networks for the policy'''
-SQUARE_POLICY = 0
-SIN_POLICY = 0
-MIX_POLICY = 0
-POLY_POLICY = 0
-
-STATE_SIZE = 64 #the characteristic dimension of the state image
-N_STEPS = 3 #how many past episodes to keep track of in the state
 if CONVOLUTIONAL:
     STATE_SHAPE = (STATE_SIZE,STATE_SIZE,N_STEPS) #the size of the pictures going into the convNet, and the number of pictures
 else:
     STATE_SHAPE = (3+NUM_ACTIONS,N_STEPS) 
     if VERBOSE: print(f'state_shape = {STATE_SHAPE}')
 
-
-
-TENSORBOARD_UPDATE_FREQUENCY = 10 #update tensorboard every _ episodes if using robot
-
-SIM_UPDATE_EVERY = 50 #if in simulation, update tensorboard every 50 episodes
-
-
-'''********************************************Hyperparameters'''
-FRAME_SIZE = 300 #this is the size of the image that the camera sends over the frame_q
-ORIGINAL_FRAME_SIZE = 800
-TRAINING_TIME = 50_000_000 #time, in seconds, that we want to run this model for 
-MAX_FRAMES = 100_000 #maximum number of frames to train for
-BUFFER_CAPACITY = 100_000 #how many (s,a,r,s*) experiences do we store in the FIFO buffer?
-BATCH_SIZE = 256 #minibatch size
-CRITIC_LR = 0.0001 #critic learning rate
-ACTOR_LR = 0.0001 #actor learning rate
-ALPHA_LR=0.0003 #alpha learning rate
-
-alpha = 1
-INITIAL_LOG_ALPHA = 0.0
-RESET = 50_000 #how many gradient steps to run between hyperparameter updates during a hyperparameter search session
-MAX_UPDATES_PER_FRAME = 1 #the ratio of gradient steps to environment steps
-EVALUATION = 10 #run an evaluation episode with mu actions every n episodes
-BUFFER_SAVE = 10_000 #save the buffers to the hard drive every n steps
-ARDUINO_RESET_TIME = 60 #how many seconds to run the arduino before resetting (I think running too long is a problem)
-'''***************************************END Hyperparameters'''
-
-
-
+tensorboard_save_path = 'microrobot_tensorboard'
+log_save_path = f'logs/{MODEL_NAME}_logs'
+model_save_path = 'models'
+buffer_save_path = f'buffers/{MODEL_NAME}_buffers'
 
 pi_model_name = f'pi_model_{MODEL_NAME}'
 q1_model_name = f'q1_model_{MODEL_NAME}'
@@ -110,7 +44,7 @@ upper_bound = 1
 target_entropy = -NUM_ACTIONS
 
 learner_device_ID = 0 #on the GPU
-env_device_ID = 0 #on the CPU
+env_device_ID = 1 #on the GPU
 master_device_ID = 0 #on the CPU
 
 gamma = 0.99
@@ -118,6 +52,7 @@ tau = 0.005
 ########################################################################################################
 order = 20
     
+'''
 mu_M_x_2c = np.load('logs/microrobot june 2 convolutional deterministic eval_logs/M_x_log.npy')
 mu_M_y_2c = np.load('logs/microrobot june 2 convolutional deterministic eval_logs/M_y_log.npy')
 mu_phi_x_2c = np.load('logs/microrobot june 2 convolutional deterministic eval_logs/phi_x_log.npy')
@@ -164,6 +99,7 @@ y = y[c_var > 3]
 c_var = c_var[c_var > 3]
 M_y_model = np.poly1d(np.polyfit(x, y, order))
 ###############################################################################################
+'''
 #log_alpha = tf.Variable(0.0, trainable = True)
 
 if not os.path.isdir(model_save_path):
@@ -355,7 +291,7 @@ def apply_squashing_function(mu,pi,logp_pi):
     return legal_mu, legal_pi, logp_pi
 
 def get_conv_actor(state_shape, NUM_ACTIONS):
-
+    print(f'generating a CNN with state shape {state_shape} and {NUM_ACTIONS} actions')
     last_init = tf.random_uniform_initializer(minval=-0.0003, maxval=0.0003)
     inputs = layers.Input(shape=(state_shape), dtype = tf.float32)
     
@@ -372,6 +308,7 @@ def get_conv_actor(state_shape, NUM_ACTIONS):
     outputs = layers.Dense(NUM_ACTIONS, activation=None, kernel_initializer=last_init)(out)
 
     model = tf.keras.Model(inputs, outputs)
+    print('finished making the CNN')
     return model
 
 
@@ -777,8 +714,7 @@ def environment_process(frame_q, frame_request_q, quit_q, begin_q, env_device_ID
             # Memory growth must be set before GPUs have been initialized
             print(e)
     
-    
-    with tf.device('/device:gpu:1'):    
+    with tf.device('/device:cpu:0'):    
         try:
             while quit_q.empty() and abort_q.empty():
          
@@ -796,6 +732,15 @@ def environment_process(frame_q, frame_request_q, quit_q, begin_q, env_device_ID
                 episodes_this_epoch = 0
                 episode = 0
                 fresh_model = 1
+                '''
+                print('you are here')
+                pi_model = tf.keras.models.load_model(f'{model_save_path}\{load_pi_model_name}.h5')
+                Q1_model = tf.keras.models.load_model(f'{model_save_path}\{load_q1_model_name}.h5')
+                print('now here')
+                
+                pi_model.summary()
+                Q1_model.summary()
+                '''
     
                 print('environment waiting for start signal')
                 while begin_q.empty() and abort_q.empty():
@@ -839,11 +784,13 @@ def environment_process(frame_q, frame_request_q, quit_q, begin_q, env_device_ID
                         
                         elif fresh_model == 1:
                             if CONVOLUTIONAL:
+                                print('trying to create a new CNN')
                                 pi_model = get_conv_actor(STATE_SHAPE, NUM_ACTIONS)
                                 print('loaded a fresh convolutional pi model')
                                 fresh_model = 0
                                 episodes_this_epoch = 0
                             else:
+                                print('trying to create a new NN')
                                 pi_model = get_state_actor(STATE_SHAPE, NUM_ACTIONS)
                                 print('loaded a fresh state pi model')
                                 fresh_model = 0
