@@ -1,6 +1,6 @@
 '''**********************************************setup parameters'''
 #give the experiment a name. usually something to do with today's date
-MODEL_NAME = 'jan13_2022_3' #example: "jan10_2022"
+MODEL_NAME = 'april12_2022_1' #example: "jan10_2022"
 
 #do we want to run a simulated microrobot (probably not)
 SIMULATION = 0 #default is 0
@@ -21,14 +21,14 @@ PARAMETER_SEARCH = 0 #default is 0
 UPDATE_ALPHA = 1 #default is 1
 
 #do we want to evaluate a model we have already trained? This runs the model deterministically. 
-CONTINUOUS_EVALUATION = 1 #default is 0
+CONTINUOUS_EVALUATION = 0 #default is 0
 
 #load a pretrained actor model?
-LOAD_PI = 1 #default is 0
+LOAD_PI = 0 #default is 0
 load_pi_model_name = 'top_pi_model_microrobot may 28_978' #default: "top_pi_model_microrobot may 28_978", a non-convolutional model
     
 #load pretrained critic models?    
-LOAD_Q = 1 #default is 0
+LOAD_Q = 0 #default is 0
 load_q1_model_name = 'top_q1_model_microrobot may 28_978' #default: 'top_q1_model_microrobot may 28_978'
 load_q2_model_name = 'top_q2_model_microrobot may 28_978' #default: 'top_q2_model_microrobot may 28_978'
 
@@ -37,10 +37,10 @@ LOAD_BUFFER = 0 #default is 0
 buffer_load_path = f'buffers/microrobot june 7 convolutional_buffers' #default: f'buffers/microrobot june 7 convolutional_buffers'
 
 ##how many frames to do at the beginning of training while randomly sampling actions, not getting from pi
-IMPLEMENT_POLICY_AFTER = 1 #default is 1
+IMPLEMENT_POLICY_AFTER = 10 #default is 1
 
 #how many frames to run at the beginning before we start doing updates (fill the buffer)
-UPDATE_AFTER = 10000 #default is 1000
+UPDATE_AFTER = 256 #default is 1000
 
 #use these if you don't want to use the neural networks for the policy, but want to use a mathematical policy
 #select only one at a time. for testing the integrity of the hardware (i.e. just seeing if the microrobot will go in a circle, chose sin_policy)

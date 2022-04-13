@@ -1,0 +1,23 @@
+DualG2HighPowerMotorShieldTop	KEYWORD1
+
+init	KEYWORD2
+setM3Speed	KEYWORD2
+setM4Speed	KEYWORD2
+setSpeeds	KEYWORD2
+getM3Fault	KEYWORD2
+getM4Fault	KEYWORD2
+flipM3	KEYWORD2
+flipM4	KEYWORD2
+enableM3Driver	KEYWORD2
+enableM4Driver	KEYWORD2
+enableDrivers	KEYWORD2
+disableM3Driver	KEYWORD2
+disableM4Driver	KEYWORD2
+disableDrivers	KEYWORD2
+getM3CurrentReading	KEYWORD2
+getM4CurrentReading	KEYWORD2
+calibrateM3CurrentOffset	KEYWORD2
+calibrateM4CurrentOffset	KEYWORD2
+calibrateCurrentOffsets	KEYWORD2
+getM3CurrentMilliamps	KEYWORD2
+getM4CurrentMilliamps	KEYWORD2

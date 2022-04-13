@@ -1,0 +1,3 @@
+timer.h problem: common with Jack's syringe pump code. 
+
+add a 0 after the two arguments for the timer.every functions. this makes it work. 

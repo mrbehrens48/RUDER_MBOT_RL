@@ -7,7 +7,7 @@ from vimba import *
 import multiprocessing as mp
 import time
 import numpy as np
-import microrobot_environment_parallel_3x as mbot
+import microrobot_environment as mbot
 import os
 from tqdm import tqdm
 from tensorflow.keras import layers
@@ -28,7 +28,8 @@ else:
 
 tensorboard_save_path = 'microrobot_tensorboard'
 log_save_path = f'logs/{MODEL_NAME}_logs'
-model_save_path = 'models'
+#model_save_path = 'models'
+model_save_path = 'C:\\Users\Windows\OneDrive - University of Pittsburgh\Documents\GitHub\RUDER_MBOT_RL\models'
 buffer_save_path = f'buffers/{MODEL_NAME}_buffers'
 
 pi_model_name = f'pi_model_{MODEL_NAME}'
@@ -1371,7 +1372,10 @@ def learner_process(minibatch_q, training_logs_q, done_q, begin_q, learner_devic
                 minibatches_gotten = 0
                 if VERBOSE: print('generating models')
                 if LOAD_PI == 1:
+                    print("you are here")
+                    print(f"this is the model to load: {load_pi_model_name}")
                     pi_model = tf.keras.models.load_model(f'{model_save_path}\{load_pi_model_name}.h5')
+                    print("you loaded a model")
                 else:
                     if CONVOLUTIONAL:
                         pi_model = get_conv_actor(STATE_SHAPE, NUM_ACTIONS)
