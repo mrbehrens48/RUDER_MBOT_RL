@@ -68,7 +68,7 @@ class Microrobot_Env:
         
         try:
             print('trying to connect to arduino')
-            self.ser = serial.Serial('COM8', 9600, timeout=1)
+            self.ser = serial.Serial('COM5', 9600, timeout=1)
             print('successfully connected to arduino')
         except:
 
@@ -158,7 +158,7 @@ class Microrobot_Env:
         M_x = action[0]
         M_y= action[1]
         M_z = max(abs(M_x), abs(M_y))
-        freq = 100
+        freq = 80
         phi_x = action[2]
         phi_x = (phi_x + 1)*pi*2 / 2 #convert to range (0,2pi)
         phi_y = action[3]
