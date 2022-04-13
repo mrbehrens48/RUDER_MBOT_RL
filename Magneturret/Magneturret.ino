@@ -129,7 +129,7 @@ void loop() {
   
   t = millis();
   PWMx = M_x*sin(freq*t/1000+phi_x)*400;
-  md_top.setM3Speed(PWMx);
+  md_top.setM4Speed(PWMx);
   
   t = millis();
   PWMy = M_y*sin(freq*t/1000+phi_y)*400;
@@ -239,7 +239,7 @@ void incrementTime()
 void testTemperature()
 {
   int temp = analogRead(temperaturePin);
-  //Serial.println(String(temp));
+  Serial.println(String(temp));
   if( temp > 400)
   {
     md_top.disableDrivers();
