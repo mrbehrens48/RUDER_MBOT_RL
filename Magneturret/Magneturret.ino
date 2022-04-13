@@ -103,7 +103,7 @@ void setup() {
   //md_top.flipM3(true);
 
 
-  t1.every(temperatureTiming, testTemperature,0);
+  //t1.every(temperatureTiming, testTemperature,0);
   //t1.every(timeInterval, incrementTime,0);
   
   
@@ -209,7 +209,8 @@ void getCommand()
         freq = atof(parsedStrings[3]);
         phi_x = atof(parsedStrings[4]);
         phi_y = atof(parsedStrings[5]);
-        Serial.println("Data Received");
+        testTemperature(); //if we got all the data correctly, send the current temperature reading. This will help monitor for errors
+        //Serial.println("Data Received");
 
         if(M_x == 1 && M_y == 2 && M_z == 3 && freq == 4 && phi_x == 5 && phi_y == 6)
         {
@@ -239,6 +240,7 @@ void incrementTime()
 void testTemperature()
 {
   int temp = analogRead(temperaturePin);
+  Serial.print("temperature is: ");
   Serial.println(String(temp));
   if( temp > 400)
   {

@@ -39,7 +39,7 @@ def arduino_communication(M_x, M_y, M_z, freq, phi_x, phi_y):
 i = 0
 while True:
     for i in range(100):
-        arduino_communication(1,1,1,2,0,0)    #order: (Mx, My, Mz, freq, phiX, phiY)
+        arduino_communication(1,1,1,10,0,0)    #order: (Mx, My, Mz, freq, phiX, phiY)
         time.sleep(1)
         print(i)
     
