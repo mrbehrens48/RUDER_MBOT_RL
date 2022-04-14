@@ -1,6 +1,6 @@
 '''**********************************************setup parameters'''
 #give the experiment a name. usually something to do with today's date
-MODEL_NAME = 'april13_2022_2' #example: "jan10_2022"
+MODEL_NAME = 'april13_2022_3' #example: "jan10_2022"
 
 #do we want to run a simulated microrobot (probably not)
 SIMULATION = 0 #default is 0
@@ -37,10 +37,10 @@ LOAD_BUFFER = 0 #default is 0
 buffer_load_path = f'buffers/microrobot june 7 convolutional_buffers' #default: f'buffers/microrobot june 7 convolutional_buffers'
 
 ##how many frames to do at the beginning of training while randomly sampling actions, not getting from pi
-IMPLEMENT_POLICY_AFTER = 1000 #default is 1
+IMPLEMENT_POLICY_AFTER = 500 #default is 1
 
 #how many frames to run at the beginning before we start doing updates (fill the buffer)
-UPDATE_AFTER = 10000 #default is 1000
+UPDATE_AFTER = 1000 #default is 1000
 
 #use these if you don't want to use the neural networks for the policy, but want to use a mathematical policy
 #select only one at a time. for testing the integrity of the hardware (i.e. just seeing if the microrobot will go in a circle, chose sin_policy)
